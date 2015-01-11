@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 public class CommandLoop {
+    public static final String PROMPT_STRING = "$ ";
     private final ShellContext context;
     private final BufferedReader in;
     private final PrintWriter out;
@@ -24,29 +25,22 @@ public class CommandLoop {
             return;
         }
         while (true) {
-            String command = prompt();
-            if (shouldExit(command)) {
-                break;
+            final ShellCommand command = prompt();
+            switch (command){
+                case QUIT:
+                    out.println("Bye...");
+                    out.flush();
+                    return;
+                default:
+                    registry.handle(command,context,out);
             }
-            registry.handle(command, context, out);
             out.flush();
         }
-        exit();
     }
 
-    private void exit() {
-        out.println("Bye...");
+    private ShellCommand prompt() throws IOException {
+        out.print(PROMPT_STRING);
         out.flush();
-    }
-
-    private boolean shouldExit(String command) {
-        return "q".equals(command) ||
-                "quit".equals(command) || "exit".equals(command);
-    }
-
-    private String prompt() throws IOException {
-        out.print("$ ");
-        out.flush();
-        return in.readLine();
+        return ShellCommand.toCommand(in.readLine());
     }
 }
