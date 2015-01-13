@@ -62,4 +62,13 @@ public class ContextNode {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        String retVal = ""+entity;
+        if (value != null) {
+            retVal+=":"+value;
+        }
+        return retVal;
+    }
 }

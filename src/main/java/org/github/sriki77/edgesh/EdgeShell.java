@@ -42,6 +42,7 @@ public class EdgeShell {
         return null;
     }
 
+
     private static Options buildOptions() {
         Options options = new Options();
         options.addOption(new Option(OPT_HELP, "Prints this message"));

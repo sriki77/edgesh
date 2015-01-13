@@ -28,11 +28,11 @@ public class ShellContext {
         buildContextTree();
     }
 
-    public ContextNode rootContext() {
+    public ContextNode rootNode() {
         return root;
     }
 
-    public ContextNode currentContext() {
+    public ContextNode currentNode() {
         return current;
     }
 
@@ -61,10 +61,11 @@ public class ShellContext {
     public boolean containsOnly(EdgeEntity... entities) {
         final HashMap<EdgeEntity, String> entityMapClone
                 = (HashMap<EdgeEntity, String>) entityMap.clone();
+        boolean entitiesPresent = true;
         for (EdgeEntity entity : entities) {
-            entityMapClone.remove(entity);
+            entitiesPresent &= (entityMapClone.remove(entity) != null);
         }
-        return entityMapClone.isEmpty();
+        return entitiesPresent && entityMapClone.isEmpty();
     }
 
     public void set(EdgeEntity entity, String value) {

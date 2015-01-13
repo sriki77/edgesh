@@ -9,6 +9,7 @@ public final class EdgeUtil {
     private EdgeUtil() {
     }
 
+
     public static String errorMsg(String msg) {
         return "error: " + msg;
     }

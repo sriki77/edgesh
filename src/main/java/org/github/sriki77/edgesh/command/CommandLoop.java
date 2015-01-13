@@ -14,9 +14,15 @@ public class CommandLoop {
     private final PrintWriter out;
 
     public CommandLoop(ShellContext context) {
+        this(context,
+                new BufferedReader(new InputStreamReader(System.in)),
+                new PrintWriter(System.out, true));
+    }
+
+    public CommandLoop(ShellContext context, BufferedReader in, PrintWriter out) {
         this.context = context;
-        in = new BufferedReader(new InputStreamReader(System.in));
-        out = new PrintWriter(System.out, true);
+        this.in = in;
+        this.out = out;
     }
 
     public void start() throws IOException {
@@ -26,16 +32,17 @@ public class CommandLoop {
         }
         while (true) {
             final ShellCommand command = prompt();
-            switch (command){
+            switch (command) {
                 case QUIT:
                     out.println("Bye...");
                     out.flush();
                     return;
                 default:
-                    registry.handle(command,context,out);
+                    registry.handle(command, context, out);
             }
             out.flush();
         }
+
     }
 
     private ShellCommand prompt() throws IOException {
