@@ -1,4 +1,4 @@
-package org.github.sriki77.edgesh.command.edge.env;
+package org.github.sriki77.edgesh.command.edge;
 
 import com.jayway.restassured.response.Response;
 import org.github.sriki77.edgesh.command.EdgeMgmtCommand;
@@ -11,14 +11,15 @@ import static org.github.sriki77.edgesh.EdgeUtil.handleResponse;
 import static org.github.sriki77.edgesh.command.ShellCommand.CAT;
 
 @EdgeMgmtCommand
-public class CatEnvCommand extends AbstractEnvCommand {
+public class CatCommand extends AbstractCommand {
 
     @Override
     public boolean handle(ShellCommand command, ShellContext context, PrintWriter out) {
-        String envName = context.currentNode().value();
-        String orgName = context.currentNode().parent().value();
-        final Response response = context.requestSpecification().get("/o/" + orgName + "/e/" + envName);
-        handleResponse("failed get details of: " + envName, out, response);
+        if (command.dotParam() || command.dotdotParam()) {
+            return false;
+        }
+        final Response response = context.contextRequest().get(buildUrl(entityValues(command)));
+        handleResponse(buildErrMsg("failed get details of: ", entityValues(command)), out, response);
         return true;
     }
 

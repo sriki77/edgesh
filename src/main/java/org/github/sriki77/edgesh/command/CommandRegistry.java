@@ -90,7 +90,7 @@ public final class CommandRegistry {
 
     private boolean checkConnect(ShellContext context, PrintWriter out) {
         out.println("Contacting Edge Mgmt Server...");
-        final Response response = context.requestSpecification().get("/organizations");
+        final Response response = context.request().get("/organizations");
         final int statusCode = response.statusCode();
         if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_FORBIDDEN) {
             out.println("Connected to Apigee Mgmt Server: " + context);

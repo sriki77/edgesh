@@ -1,33 +1,33 @@
 package org.github.sriki77.edgesh.command.edge;
 
-import org.github.sriki77.edgesh.command.Command;
+import com.jayway.restassured.response.Response;
 import org.github.sriki77.edgesh.command.EdgeMgmtCommand;
 import org.github.sriki77.edgesh.command.ShellCommand;
+import org.github.sriki77.edgesh.data.ContextNode;
 import org.github.sriki77.edgesh.data.EdgeEntity;
 import org.github.sriki77.edgesh.data.ShellContext;
 
 import java.io.PrintWriter;
 
-import static org.github.sriki77.edgesh.EdgeUtil.printMsg;
+import static org.github.sriki77.edgesh.EdgeUtil.handleResponse;
 import static org.github.sriki77.edgesh.command.ShellCommand.CD;
 
 @EdgeMgmtCommand
-public class CdUpCommand implements Command {
+public class CatDotCommand extends AbstractCommand {
 
     @Override
     public boolean handle(ShellCommand command, ShellContext context, PrintWriter out) {
-        if (command.dotParam()) {
-            return true;
-        }
-        if (!command.dotdotParam()) {
+        if (!command.dotParam() && !command.dotdotParam()) {
             return false;
         }
-        if (context.atRoot()) {
-            return true;
+        ContextNode node = context.currentNode();
+        if (command.dotdotParam()) {
+            if (!context.atRoot()) {
+                node = context.currentNode().parent();
+            }
         }
-        final EdgeEntity entity = context.currentNode().entity();
-        printMsg("Moved out of " + entity + ":" + context.get(entity), out);
-        context.moveUp();
+        final Response response = context.contextRequest(node).get();
+        handleResponse("failed to get details of: " + command.param(), out, response);
         return true;
     }
 

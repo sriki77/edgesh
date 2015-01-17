@@ -31,7 +31,7 @@ public class LsOrgCommand extends AbstractOrgCommand {
 
     private void listEnv(ShellContext context, PrintWriter out) {
         String orgName = context.currentNode().value();
-        final Response response = context.requestSpecification().get("/o/" + orgName + "/environments");
+        final Response response = context.request().get("/o/" + orgName + "/environments");
         handleResponse("failed get details of environments for org: " + orgName, out, response);
     }
 

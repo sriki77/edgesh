@@ -7,6 +7,9 @@ import org.apache.http.HttpStatus;
 import java.io.PrintWriter;
 
 public final class EdgeUtil {
+
+    public static final String VERBOSE_LOGGING = "verbose.logging";
+
     private EdgeUtil() {
     }
 
@@ -57,6 +60,10 @@ public final class EdgeUtil {
         }
         printError(errMsg, out, response);
         return false;
+    }
+
+    public static boolean logVerbose() {
+        return Boolean.valueOf(System.getProperty(VERBOSE_LOGGING, "false"));
     }
 
 

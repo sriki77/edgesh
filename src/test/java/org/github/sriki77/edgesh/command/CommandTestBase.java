@@ -1,5 +1,6 @@
 package org.github.sriki77.edgesh.command;
 
+import org.github.sriki77.edgesh.EdgeUtil;
 import org.github.sriki77.edgesh.data.ShellContext;
 import org.junit.After;
 import org.junit.Before;
@@ -36,7 +37,7 @@ public abstract class CommandTestBase {
     protected PrintWriter initOutputStream() throws IOException {
         final PipedOutputStream outputStream = new PipedOutputStream();
         commandOut = new BufferedInputStream(new PipedInputStream(outputStream));
-        return new PrintWriter(outputStream,true);
+        return new PrintWriter(outputStream, true);
     }
 
     protected String execCommand(String cmd) throws IOException {
@@ -62,7 +63,7 @@ public abstract class CommandTestBase {
             joiner.add(line);
         } while (!line.endsWith(PROMPT));
 
-        return joiner.toString().replace(PROMPT,"");
+        return joiner.toString().replace(PROMPT, "");
     }
 
     protected String nextLine() throws IOException {
@@ -80,6 +81,7 @@ public abstract class CommandTestBase {
 
     @Before
     public void setUp() throws Exception {
+        System.setProperty(EdgeUtil.VERBOSE_LOGGING, "true");
         context = buildContext();
         final CommandLoop commandLoop = new CommandLoop(context, initReader(), initOutputStream());
         new Thread() {

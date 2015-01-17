@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import static com.jayway.restassured.RestAssured.config;
 import static com.jayway.restassured.RestAssured.with;
+import static org.github.sriki77.edgesh.EdgeUtil.logVerbose;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ENV;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ORG;
 
@@ -50,35 +51,39 @@ public class ShellContext {
         node.addChild(new ContextNode(ENV));
     }
 
-    public RequestSpecification requestSpecification() {
+    public RequestSpecification request() {
+        return requestWithURI(mgmtUrl);
+    }
+
+    public RequestSpecification contextRequest() {
+        return contextRequest(current);
+    }
+
+    public RequestSpecification contextRequest(ContextNode node) {
+        return requestWithURI(buildContextUri(mgmtUrl, node));
+    }
+
+    private String buildContextUri(String mgmtUrl, ContextNode current) {
+        if (current == null) {
+            return mgmtUrl;
+        }
+        buildContextUri(mgmtUrl, current.parent());
+        final String prefix = current.entity().prefix();
+        final String value = entityMap.get(current.entity());
+        return prefix.length() == 0 ? mgmtUrl : mgmtUrl + prefix + "/" + value;
+    }
+
+    private RequestSpecification requestWithURI(String uri) {
         reset();
         config = config().sslConfig(SSLConfig.sslConfig().allowAllHostnames());
-        return with().baseUri(mgmtUrl).auth().preemptive()
+        RequestSpecification request = with().baseUri(uri).auth().preemptive()
                 .basic(userName, password);
-    }
-
-    public boolean containsOnly(EdgeEntity... entities) {
-        final HashMap<EdgeEntity, String> entityMapClone
-                = (HashMap<EdgeEntity, String>) entityMap.clone();
-        boolean entitiesPresent = true;
-        for (EdgeEntity entity : entities) {
-            entitiesPresent &= (entityMapClone.remove(entity) != null);
+        if (logVerbose()) {
+            request = request.log().path();
         }
-        return entitiesPresent && entityMapClone.isEmpty();
+        return request;
     }
 
-    public void set(EdgeEntity entity, String value) {
-        entityMap.put(entity, value);
-    }
-
-
-    public void remove(EdgeEntity entity) {
-        entityMap.remove(entity);
-    }
-
-    public void clearEntities() {
-        entityMap.clear();
-    }
 
     public String get(EdgeEntity entity) {
         return entityMap.get(entity);
@@ -89,16 +94,12 @@ public class ShellContext {
         return mgmtUrl;
     }
 
-    public ContextNode nodeOfType(EdgeEntity entity) {
-        return root.nodeOfType(entity);
-    }
-
-    public void setAndMakeCurrent(EdgeEntity entity, String value) {
+    public ContextNode setAndMakeCurrent(EdgeEntity entity, String value) {
         final ContextNode node = root.nodeOfType(entity);
         node.setValue(value);
         setCurrent(node);
+        return node;
     }
-
 
     public void reset() {
         entityMap.clear();
@@ -107,10 +108,17 @@ public class ShellContext {
 
     public void moveUp() {
         final ContextNode parent = current.parent();
-        setCurrent(parent ==null?root: parent);
+        setCurrent(parent == null ? root : parent);
     }
 
     public boolean atRoot() {
-        return current==root;
+        return current == root;
+    }
+
+    public ContextNode setAndMoveDown(EdgeEntity entity, String value) {
+        final ContextNode node = current.nodeOfType(entity);
+        node.setValue(value);
+        setCurrent(node);
+        return node;
     }
 }
