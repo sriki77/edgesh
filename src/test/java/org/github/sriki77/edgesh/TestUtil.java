@@ -14,7 +14,15 @@ public final class TestUtil {
 
     public static final ShellContext buildContext() {
         return new ShellContext("https://api.enterprise.apigee.com/v1/",
-                System.getProperty("org.userName"), System.getProperty("org.password"));
+                userName(), password());
+    }
+
+    private static String password() {
+        return System.getProperty("org.password", System.getenv("pwd"));
+    }
+
+    private static String userName() {
+        return System.getProperty("org.userName", System.getenv("user"));
     }
 
     public static File testDataDirectory() {
