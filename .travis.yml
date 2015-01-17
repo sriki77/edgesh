@@ -8,4 +8,4 @@ env:
     secure: eFopWw6n8IWzKmRUtLdzsuxFRBDSZksJUyF5v8fTdJSNzxNNm3JHU1CCs7RUS/XQJ3C47wcmKyXFsg+2V80AnrL6yBldBAU1SnZ7pIf4ev5r3gaFuPGRPoi4ovlnwEKd00lJqhJRDCk2d9105L4atRs0LWY9MFoUQYlzBq5y80o=
 
 script:
-- mvn clean test -DargLine="-Dorg.userName=$user -Dorg.password=$pwd"
+- mvn clean test -Dusername=$user -Dpwd=$pwd
