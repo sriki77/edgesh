@@ -13,7 +13,8 @@ public final class TestUtil {
     }
 
     public static final ShellContext buildContext() {
-        return new ShellContext("https://api.enterprise.apigee.com/v1/", "sseshadri@apigee.com", "a999999=A");
+        return new ShellContext("https://api.enterprise.apigee.com/v1/",
+                System.getProperty("org.userName"), System.getProperty("org.password"));
     }
 
     public static File testDataDirectory() {
