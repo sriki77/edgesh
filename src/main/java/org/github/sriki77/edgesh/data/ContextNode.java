@@ -3,6 +3,7 @@ package org.github.sriki77.edgesh.data;
 import org.github.sriki77.edgesh.command.Command;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.github.sriki77.edgesh.data.EdgeEntity.ROOT;
 
@@ -70,5 +71,9 @@ public class ContextNode {
             retVal+=":"+value;
         }
         return retVal;
+    }
+
+    public List<Command> commands() {
+        return commands;
     }
 }

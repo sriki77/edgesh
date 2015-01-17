@@ -8,6 +8,7 @@ import org.github.sriki77.edgesh.data.ShellContext;
 import org.reflections.Reflections;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public final class CommandRegistry {
@@ -28,9 +29,27 @@ public final class CommandRegistry {
     }
 
     public void handle(ShellCommand command, ShellContext context, PrintWriter out) {
-        for (Command c : commands) {
-            if (c.handle(command, context, out)) {
-                break;
+        for (Command c : context.currentNode().commands()) {
+            final ShellCommand handles = c.handles();
+            if (handles == null) {
+                if (c.handle(command, context, out)) {
+                    break;
+                }
+                continue;
+            }
+
+            if (command == handles) {
+                if (c.handlesParamPrefix() == null) {
+                    if (c.handle(command, context, out)) {
+                        break;
+                    }
+                    continue;
+                }
+                if (c.handlesParamPrefix().equals(c.handles().paramPrefix())) {
+                    if (c.handle(command, context, out)) {
+                        break;
+                    }
+                }
             }
         }
     }
@@ -57,10 +76,16 @@ public final class CommandRegistry {
 
     private void bindCommands(ShellContext context) {
         final ContextNode root = context.rootNode();
+        ArrayList<Command> allEntityCommands = new ArrayList<>();
         for (Command command : commands) {
             final EdgeEntity entity = command.applicableTo();
+            if (entity == EdgeEntity.ALL) {
+                allEntityCommands.add(command);
+                continue;
+            }
             root.bindTo(entity, command);
         }
+        allEntityCommands.forEach(c -> root.bindTo(EdgeEntity.ALL, c));
     }
 
     private boolean checkConnect(ShellContext context, PrintWriter out) {

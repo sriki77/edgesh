@@ -1,5 +1,8 @@
-package org.github.sriki77.edgesh.command;
+package org.github.sriki77.edgesh.command.edge;
 
+import org.github.sriki77.edgesh.command.Command;
+import org.github.sriki77.edgesh.command.EdgeMgmtCommand;
+import org.github.sriki77.edgesh.command.ShellCommand;
 import org.github.sriki77.edgesh.data.ContextNode;
 import org.github.sriki77.edgesh.data.EdgeEntity;
 import org.github.sriki77.edgesh.data.ShellContext;
@@ -12,9 +15,6 @@ import static org.github.sriki77.edgesh.command.ShellCommand.PWD;
 public class PwdCommand implements Command {
     @Override
     public boolean handle(ShellCommand command, ShellContext context, PrintWriter out) {
-        if(command!= PWD){
-            return false;
-        }
         printPwd(context.currentNode(), out);
         out.println();
         return true;
@@ -31,5 +31,10 @@ public class PwdCommand implements Command {
     @Override
     public EdgeEntity applicableTo() {
         return EdgeEntity.ALL;
+    }
+
+    @Override
+    public ShellCommand handles() {
+        return PWD;
     }
 }

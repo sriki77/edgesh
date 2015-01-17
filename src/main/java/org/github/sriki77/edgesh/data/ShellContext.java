@@ -6,7 +6,6 @@ import com.jayway.restassured.specification.RequestSpecification;
 import java.util.HashMap;
 
 import static com.jayway.restassured.RestAssured.config;
-import static com.jayway.restassured.RestAssured.reset;
 import static com.jayway.restassured.RestAssured.with;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ENV;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ORG;
@@ -98,5 +97,20 @@ public class ShellContext {
         final ContextNode node = root.nodeOfType(entity);
         node.setValue(value);
         setCurrent(node);
+    }
+
+
+    public void reset() {
+        entityMap.clear();
+        current = root;
+    }
+
+    public void moveUp() {
+        final ContextNode parent = current.parent();
+        setCurrent(parent ==null?root: parent);
+    }
+
+    public boolean atRoot() {
+        return current==root;
     }
 }

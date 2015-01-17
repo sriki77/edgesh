@@ -42,12 +42,11 @@ public class CommandLoop {
             }
             out.flush();
         }
-
     }
 
     private ShellCommand prompt() throws IOException {
         out.print(PROMPT_STRING);
         out.flush();
-        return ShellCommand.toCommand(in.readLine());
+        return ShellCommand.toCommand(in.readLine(),out);
     }
 }
