@@ -1,11 +1,14 @@
 package org.github.sriki77.edgesh.command.edge;
 
 import com.jayway.restassured.response.Response;
+import org.apache.commons.lang3.tuple.Pair;
 import org.github.sriki77.edgesh.command.EdgeMgmtCommand;
 import org.github.sriki77.edgesh.command.ShellCommand;
+import org.github.sriki77.edgesh.data.EdgeEntity;
 import org.github.sriki77.edgesh.data.ShellContext;
 
 import java.io.PrintWriter;
+import java.util.LinkedList;
 
 import static org.github.sriki77.edgesh.EdgeUtil.handleResponse;
 import static org.github.sriki77.edgesh.command.ShellCommand.CAT;
@@ -18,8 +21,9 @@ public class CatCommand extends AbstractCommand {
         if (command.dotParam() || command.dotdotParam()) {
             return false;
         }
-        final Response response = context.contextRequest().get(buildUrl(entityValues(command)));
-        handleResponse(buildErrMsg("failed get details of: ", entityValues(command)), out, response);
+        final LinkedList<Pair<EdgeEntity, String>> pairs = entityValues(command);
+        final Response response = context.contextRequest().get(buildUrl(pairs));
+        handleResponse(buildErrMsg("failed get details of: ", pairs), out, response);
         return true;
     }
 

@@ -1,5 +1,6 @@
 package org.github.sriki77.edgesh.data;
 
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.SSLConfig;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -8,7 +9,6 @@ import java.util.HashMap;
 import static com.jayway.restassured.RestAssured.config;
 import static com.jayway.restassured.RestAssured.with;
 import static org.github.sriki77.edgesh.EdgeUtil.logVerbose;
-import static org.github.sriki77.edgesh.data.EdgeEntity.ENV;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ORG;
 
 public class ShellContext {
@@ -48,7 +48,13 @@ public class ShellContext {
 
     private void buildContextTree() {
         ContextNode node = root.addChild(new ContextNode(ORG));
-        node.addChild(new ContextNode(ENV));
+        buildContextTree(node, ORG);
+    }
+
+    private void buildContextTree(ContextNode node, EdgeEntity entity) {
+        for (EdgeEntity child : entity.getChildren()) {
+            buildContextTree(node.addChild(new ContextNode(child)), child);
+        }
     }
 
     public RequestSpecification request() {
@@ -67,14 +73,20 @@ public class ShellContext {
         if (current == null) {
             return mgmtUrl;
         }
-        buildContextUri(mgmtUrl, current.parent());
+        mgmtUrl = buildContextUri(mgmtUrl, current.parent());
         final String prefix = current.entity().prefix();
         final String value = entityMap.get(current.entity());
-        return prefix.length() == 0 ? mgmtUrl : mgmtUrl + prefix + "/" + value;
+        return prefix.length() == 0 ? mgmtUrl : mgmtUrl + prefix + "/" + value + "/";
+    }
+
+
+    public static String urlFragmentFor(EdgeEntity entity, String value) {
+        final String prefix = entity.prefix();
+        return prefix.length() == 0 ? "" : prefix + "/" + value;
     }
 
     private RequestSpecification requestWithURI(String uri) {
-        reset();
+        RestAssured.reset();
         config = config().sslConfig(SSLConfig.sslConfig().allowAllHostnames());
         RequestSpecification request = with().baseUri(uri).auth().preemptive()
                 .basic(userName, password);
@@ -108,7 +120,7 @@ public class ShellContext {
 
     public void moveUp() {
         final ContextNode parent = current.parent();
-        setCurrent(parent == null ? root : parent);
+        setCurrent(parent == null ? current : parent);
     }
 
     public boolean atRoot() {

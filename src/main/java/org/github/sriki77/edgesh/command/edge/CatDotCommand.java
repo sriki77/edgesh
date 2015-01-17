@@ -10,7 +10,7 @@ import org.github.sriki77.edgesh.data.ShellContext;
 import java.io.PrintWriter;
 
 import static org.github.sriki77.edgesh.EdgeUtil.handleResponse;
-import static org.github.sriki77.edgesh.command.ShellCommand.CD;
+import static org.github.sriki77.edgesh.command.ShellCommand.CAT;
 
 @EdgeMgmtCommand
 public class CatDotCommand extends AbstractCommand {
@@ -19,6 +19,9 @@ public class CatDotCommand extends AbstractCommand {
     public boolean handle(ShellCommand command, ShellContext context, PrintWriter out) {
         if (!command.dotParam() && !command.dotdotParam()) {
             return false;
+        }
+        if (command.dotParam() && context.atRoot()) {
+            return true;
         }
         ContextNode node = context.currentNode();
         if (command.dotdotParam()) {
@@ -38,6 +41,6 @@ public class CatDotCommand extends AbstractCommand {
 
     @Override
     public ShellCommand handles() {
-        return CD;
+        return CAT;
     }
 }

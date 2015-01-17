@@ -33,9 +33,14 @@ public abstract class AbstractCommand implements Command {
     }
 
     protected LinkedList<Pair<EdgeEntity, String>> entityValues(ShellCommand command) {
+        return entityValues(command, 0);
+    }
+
+    protected LinkedList<Pair<EdgeEntity, String>> entityValues(ShellCommand command, int indexFromLast) {
         final LinkedList<Pair<EdgeEntity, String>> entityValuePairs = new LinkedList<>();
         final String[] parts = command.param().split("/");
-        for (String part : parts) {
+        for (int i = 0; i < parts.length - indexFromLast; i++) {
+            String part = parts[i];
             final String prefix = prefix(part);
             final String suffix = suffix(part);
             final Pair<EdgeEntity, String> edgeEntityValuePair

@@ -4,6 +4,7 @@ import org.github.sriki77.edgesh.command.Command;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.github.sriki77.edgesh.data.EdgeEntity.ROOT;
 
@@ -66,14 +67,18 @@ public class ContextNode {
 
     @Override
     public String toString() {
-        String retVal = ""+entity;
+        String retVal = "" + entity;
         if (value != null) {
-            retVal+=":"+value;
+            retVal += ":" + value;
         }
         return retVal;
     }
 
     public List<Command> commands() {
         return commands;
+    }
+
+    public List<EdgeEntity> childEntities() {
+        return children.stream().map(c -> c.entity).collect(Collectors.toList());
     }
 }

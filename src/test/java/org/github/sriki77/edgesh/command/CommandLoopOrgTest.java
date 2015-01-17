@@ -21,7 +21,7 @@ public class CommandLoopOrgTest extends CommandTestBase {
     public void shouldListEntitiesInOrg() throws Exception {
         execCommand("cd sriki77");
         final String result = execCommand("ls");
-        assertThat(result.contains("ENV,APIS,PRODS,APPS,COMP,DEVS,AUD,STAT,OAUTH,REP,ROLE,VAULT"), is(true));
+        assertThat(result.contains("ENV"), is(true));
     }
 
     @Test
