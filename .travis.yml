@@ -8,4 +8,4 @@ env:
     pwd:
       secure: dp/Lfa36oMVzpJAZLwzsb65V8wLqy8lsx8IbXGU16k3tc5iLCL5mULm9TIfXL9Hl/UYSDdhMLuh6EaNvM2Cb3Kd91C+vvVzsBcOUoaniY5BxxA/wZgn9utZZ/nzU2lwoQkraZHOTJeE6tjGwuBLbyK1h9twlIOx53ft3CuxR7CQ=
 script:
-- mvn clean test -Dusername=$user -Dpassword=$pwd
+- mvn clean test 
