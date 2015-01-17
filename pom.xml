@@ -54,24 +54,7 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.github.sriki77</groupId>
-                <artifactId>keychain-passwd-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <accountName>apigee_api_pwd</accountName>
-                    <itemName>apigee_api_pwd</itemName>
-                    <passwordProperty>password</passwordProperty>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>getpasswd</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -79,7 +62,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <org.userName>${username}</org.userName>
-                        <org.password>${password}${pwd}</org.password>
+                        <org.password>${password}</org.password>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
