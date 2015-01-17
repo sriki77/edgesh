@@ -1,6 +1,11 @@
 language: java
 jdk:
-    - oraclejdk8
-script:
-    - mvn clean test
+- oraclejdk8
+env:
+  user:
+    secure: I0lwn4KPURzkCMsNtIcPYTttCFqxej0RIpnsxBgX6nWk2gamkngp+YLLceSE1o+JA765EEGEMrikLXQs6kLDzEOyeWwgJf9MqPGPa1IlLfl1o0jwc4crHnacLF2kyht/OeThlfDZh4HTXJ3lS9PSWRwYDeJudIa68z02b+xTx88=
+  pwd:
+    secure: eFopWw6n8IWzKmRUtLdzsuxFRBDSZksJUyF5v8fTdJSNzxNNm3JHU1CCs7RUS/XQJ3C47wcmKyXFsg+2V80AnrL6yBldBAU1SnZ7pIf4ev5r3gaFuPGRPoi4ovlnwEKd00lJqhJRDCk2d9105L4atRs0LWY9MFoUQYlzBq5y80o=
 
+script:
+- mvn clean test -DargLine="-Dorg.userName=$user -Dorg.password=$pwd"

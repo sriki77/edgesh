@@ -79,7 +79,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <org.userName>${username}</org.userName>
-                        <org.password>${password}</org.password>
+                        <org.password>${password}${pwd}</org.password>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
