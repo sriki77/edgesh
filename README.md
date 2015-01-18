@@ -43,3 +43,11 @@ Valid Commands:
 [help, h, ?]    - prints this message.
 ---------------
 ```
+
+Limitations
+--------
+Currently read only commands are implemented in the shell. Mutable commands will be added soon.
+
+About
+--------
+The initial version is implemented by Srikanth Seshadri. Please feel free to contribute ideas,feedback and of course code!!

@@ -7,7 +7,7 @@ script:
 env:
   global:
     pwd:
-      secure: "QVqVPA8aT9jqVs4BamXo7lHCHZ9CBq5\\+tyAmR\\/0ht8HPWH8wpLQjncTuy\\+k4aO\\/NuNnbGZI7ytdADBQAB0t3yq2iWDtR7rGuAFTAa\\/ReubWjgxqOoiNK2bDW9Y\\+IA9mfRH84r0RdRqRfRF3xMEopJlFepG44njxrnB2OCvRco8g="
+      secure: 'QVqVPA8aT9jqVs4BamXo7lHCHZ9CBq5\\+tyAmR\\/0ht8HPWH8wpLQjncTuy\\+k4aO\\/NuNnbGZI7ytdADBQAB0t3yq2iWDtR7rGuAFTAa\\/ReubWjgxqOoiNK2bDW9Y\\+IA9mfRH84r0RdRqRfRF3xMEopJlFepG44njxrnB2OCvRco8g='
 
     user:
-      secure: "HcZcNqtoicORhkjOvabRAx6vcSF57xXbm4jUaMA2VojV2wncm3O\\/wHfXZ3Pua273s9hguDbFO5sl0V4VVG1l3\\+wIONnUCwF5waOQX1\\+Qvv8fdKDUwFee5YqY4IAyCSFsaF7wrJe51o2hg\\+l1RAsMp/j2IkZXql6zNolGboPQFyE="
+      secure: 'HcZcNqtoicORhkjOvabRAx6vcSF57xXbm4jUaMA2VojV2wncm3O\\/wHfXZ3Pua273s9hguDbFO5sl0V4VVG1l3\\+wIONnUCwF5waOQX1\\+Qvv8fdKDUwFee5YqY4IAyCSFsaF7wrJe51o2hg\\+l1RAsMp/j2IkZXql6zNolGboPQFyE='
