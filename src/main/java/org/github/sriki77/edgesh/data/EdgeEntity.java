@@ -3,10 +3,10 @@ package org.github.sriki77.edgesh.data;
 import org.apache.commons.lang3.StringUtils;
 
 public enum EdgeEntity {
-    ROOT(""), ENV("e"), APIS("apis"), PRODS("apiproducts"), APPS("apps"),
+    ROOT(""),  APIS("apis"), PRODS("apiproducts"), APPS("apps"),
     COMP("companies"), DEVS("developers"), AUD("audits"), STAT("stat"),
     OAUTH("oauth2"), REP("reports"), ROLE("userrole"), VAULT("vault"),
-    ALL("all"), INVALID("invalid"), TS("targetServers"), ORG("o", ENV);
+    ALL("all"), INVALID("invalid"), TS("targetservers"),ENV("e",TS), ORG("o", ENV);
 
     private final String prefix;
     private final EdgeEntity[] children;
