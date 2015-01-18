@@ -7,26 +7,38 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public enum ShellCommand {
-    LS(0, 1, "ls"), CD(1, "cd"), CAT(1, "cat"), RM(1, "rm"), NEW(1, "new"), QUIT("q", "quit", "exit"),
-    PWD("pwd"), SET(1, "set"), INVALID();
+    LS(0, 1, "list directory(entity) contents.", "ls"),
+    CD(1, "change directory(entity) to given parameter.", "cd"),
+    CAT(1, "print details of the given directory(entity).", "cat"),
+    RM(1, "remove a given directory(entity). *NOT IMPLEMENTED YET*", "rm"),
+    NEW(1, "create a new directory(entity). *NOT IMPLEMENTED YET*", "new"),
+    QUIT("quit the shell.", "q", "quit", "exit"),
+    PWD("print the current working directory(entity).", "pwd"),
+    SET(1, "set the value of a given directory(entity). *NOT IMPLEMENTED YET*", "set"),
+    HELP("prints this message.", "help", "h", "?"),
+    INVALID("");
+
     public static final String PARAM_PREFIX_SEPARATOR = ":";
     private final int minParamCount;
     private final int maxParamCount;
+    private final String description;
     private final String[] commandStrings;
     private String param;
+    private static int maxlen = -1;
 
-    ShellCommand(int minParamCount, int maxParamCount, String... commandStrings) {
+    ShellCommand(int minParamCount, int maxParamCount, String description, String... commandStrings) {
         this.minParamCount = minParamCount;
         this.maxParamCount = maxParamCount;
+        this.description = description;
         this.commandStrings = commandStrings;
     }
 
-    ShellCommand(int minParamCount, String... commandStrings) {
-        this(minParamCount, minParamCount, commandStrings);
+    ShellCommand(int minParamCount, String description, String... commandStrings) {
+        this(minParamCount, minParamCount, description, commandStrings);
     }
 
-    ShellCommand(String... commandStrings) {
-        this(0, commandStrings);
+    ShellCommand(String description, String... commandStrings) {
+        this(0, description, commandStrings);
     }
 
     public String param() {
@@ -63,10 +75,26 @@ public enum ShellCommand {
 
     @Override
     public String toString() {
-        return "ShellCommand{" +
-                "commandStrings=" + Arrays.toString(commandStrings) +
-                ", param='" + param + '\'' +
-                '}';
+        final int maxLength = maxCommandStringsLength();
+        final String cmdStrings = Arrays.toString(commandStrings);
+        final StringBuilder spaceBuilder = new StringBuilder();
+        spaceBuilder.setLength(maxLength - cmdStrings.length());
+        final String spaces = spaceBuilder.toString().replace('\u0000', ' ');
+        return cmdStrings + spaces + " - " + description;
+    }
+
+    private static int maxCommandStringsLength() {
+        if (maxlen != -1) {
+            return maxlen;
+        }
+        int len = -1;
+        for (ShellCommand command : values()) {
+            final int cmdStrLen = Arrays.toString(command.commandStrings).length();
+            if (len < cmdStrLen) {
+                len = cmdStrLen;
+            }
+        }
+        return maxlen = len;
     }
 
     public static ShellCommand toCommand(String input, PrintWriter out) {

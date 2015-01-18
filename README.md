@@ -26,3 +26,5 @@ java -jar edgesh-1.0.jar
  -url <url>      Apigee Edge Mgmt URL
 ```
 The command line parameters are self explanatory; in essence they capture the information required to work with REST API of Apigee Edge management server.
+
+**Supported Commands In Shell**
