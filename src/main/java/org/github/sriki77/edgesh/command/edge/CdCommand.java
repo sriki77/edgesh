@@ -22,9 +22,12 @@ public class CdCommand extends AbstractCommand {
             return false;
         }
         final LinkedList<Pair<EdgeEntity, String>> pairs = entityValues(command);
-        final Response response = context.contextRequest().get(buildUrl(pairs));
+        final Response response = request(command, context).get(buildUrl(pairs));
         if (!handleResponse(buildErrMsg("failed to change to ",pairs), out, response)) {
             return true;
+        }
+        if(command.param().startsWith("/")){
+            context.reset();
         }
         for (Pair<EdgeEntity, String> p : pairs) {
             context.setAndMoveDown(p.getLeft(), p.getRight());

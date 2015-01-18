@@ -40,6 +40,7 @@ public class CommandLoop {
                 default:
                     registry.handle(command, context, out);
             }
+            ShellCommand.clear();
             out.flush();
         }
     }

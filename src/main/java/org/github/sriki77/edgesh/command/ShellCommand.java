@@ -135,4 +135,13 @@ public enum ShellCommand {
         return param == null ? false : "..".equals(param);
     }
 
+    public boolean paramAtRoot() {
+        return param == null ? false : param.startsWith("/");
+    }
+
+    public static void clear() {
+        for (ShellCommand command : values()) {
+            command.param=null;
+        }
+    }
 }

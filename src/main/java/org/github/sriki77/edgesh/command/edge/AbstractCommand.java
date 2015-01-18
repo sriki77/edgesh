@@ -1,10 +1,12 @@
 package org.github.sriki77.edgesh.command.edge;
 
+import com.jayway.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.github.sriki77.edgesh.command.Command;
 import org.github.sriki77.edgesh.command.ShellCommand;
 import org.github.sriki77.edgesh.data.EdgeEntity;
+import org.github.sriki77.edgesh.data.ShellContext;
 
 import java.util.LinkedList;
 import java.util.StringJoiner;
@@ -38,7 +40,7 @@ public abstract class AbstractCommand implements Command {
 
     protected LinkedList<Pair<EdgeEntity, String>> entityValues(ShellCommand command, int indexFromLast) {
         final LinkedList<Pair<EdgeEntity, String>> entityValuePairs = new LinkedList<>();
-        final String[] parts = command.param().split("/");
+        final String[] parts = paramParts(command);
         for (int i = 0; i < parts.length - indexFromLast; i++) {
             String part = parts[i];
             final String prefix = prefix(part);
@@ -48,6 +50,12 @@ public abstract class AbstractCommand implements Command {
             entityValuePairs.add(edgeEntityValuePair);
         }
         return entityValuePairs;
+    }
+
+    private String[] paramParts(ShellCommand command) {
+        String param = command.param();
+        param = param.startsWith("/") ? param.substring(1) : param;
+        return param.split("/");
     }
 
     private String suffix(String param) {
@@ -66,6 +74,9 @@ public abstract class AbstractCommand implements Command {
         return parts[0];
     }
 
+    protected RequestSpecification request(ShellCommand command, ShellContext context) {
+        return command.paramAtRoot()?context.contextFromRoot():context.contextRequest();
+    }
     @Override
     public EdgeEntity applicableTo() {
         return EdgeEntity.ALL;

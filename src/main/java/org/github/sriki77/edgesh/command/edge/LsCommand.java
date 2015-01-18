@@ -33,13 +33,15 @@ public class LsCommand extends AbstractCommand {
         }
         final LinkedList<Pair<EdgeEntity, String>> pairs = entityValues(command, 1);
         final String lastSuffix = lastSuffix(command.param());
-        final Response response = context.contextRequest().get(buildUrl(pairs) + lastSuffix);
+        final Response response = request(command, context).get(buildUrl(pairs) + lastSuffix);
         handleResponse("failed get details of: " + command.param(), out, response);
         return true;
     }
 
     private String lastSuffix(String param) {
-        return toEntity(param.substring(param.lastIndexOf('/') + 1)).prefix();
+        final int loc = param.lastIndexOf('/');
+        String slash = (loc == -1 ? "" : "/");
+        return slash + toEntity(param.substring(loc + 1)).prefix();
     }
 
     protected void listEntities(ContextNode node, PrintWriter out) {

@@ -3,6 +3,7 @@ package org.github.sriki77.edgesh.data;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.SSLConfig;
 import com.jayway.restassured.specification.RequestSpecification;
+import org.github.sriki77.edgesh.command.ShellCommand;
 
 import java.util.HashMap;
 
@@ -79,7 +80,6 @@ public class ShellContext {
         return prefix.length() == 0 ? mgmtUrl : mgmtUrl + prefix + "/" + value + "/";
     }
 
-
     public static String urlFragmentFor(EdgeEntity entity, String value) {
         final String prefix = entity.prefix();
         return prefix.length() == 0 ? "" : prefix + "/" + value;
@@ -132,5 +132,9 @@ public class ShellContext {
         node.setValue(value);
         setCurrent(node);
         return node;
+    }
+
+    public RequestSpecification contextFromRoot() {
+        return requestWithURI(mgmtUrl);
     }
 }

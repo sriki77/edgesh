@@ -44,9 +44,11 @@ Valid Commands:
 ---------------
 ```
 
-Limitations
+Current Status & Limitations
 --------
-Currently read only commands are implemented in the shell. Mutable commands will be added soon.
+ + Currently read only commands are implemented in the shell. Mutable commands will be added soon. 
+ 
++ This is still work in progress; supported commands are being enhanced for options and bug fixes.
 
 About
 --------

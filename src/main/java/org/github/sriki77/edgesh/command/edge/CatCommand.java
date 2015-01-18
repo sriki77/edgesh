@@ -22,7 +22,7 @@ public class CatCommand extends AbstractCommand {
             return false;
         }
         final LinkedList<Pair<EdgeEntity, String>> pairs = entityValues(command);
-        final Response response = context.contextRequest().get(buildUrl(pairs));
+        final Response response = request(command,context).get(buildUrl(pairs));
         handleResponse(buildErrMsg("failed get details of: ", pairs), out, response);
         return true;
     }
