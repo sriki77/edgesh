@@ -28,3 +28,18 @@ java -jar edgesh-1.0.jar
 The command line parameters are self explanatory; in essence they capture the information required to work with REST API of Apigee Edge management server.
 
 **Supported Commands In Shell**
+
+```
+Valid Commands:
+---------------
+[ls]            - list directory(entity) contents.
+[cd]            - change directory(entity) to given parameter.
+[cat]           - print details of the given directory(entity).
+[rm]            - remove a given directory(entity). *NOT IMPLEMENTED YET*
+[new]           - create a new directory(entity). *NOT IMPLEMENTED YET*
+[q, quit, exit] - quit the shell.
+[pwd]           - print the current working directory(entity).
+[set]           - set the value of a given directory(entity). *NOT IMPLEMENTED YET*
+[help, h, ?]    - prints this message.
+---------------
+```

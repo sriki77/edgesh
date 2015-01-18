@@ -3,6 +3,7 @@ jdk:
 - oraclejdk8
 script:
 - mvn clean test
+
 env:
   global:
     pwd:
