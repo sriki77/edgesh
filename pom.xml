@@ -80,7 +80,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.github.sriki77.edgesh.EdgeShell</mainClass>
+                            <mainClass>org.github.sriki77.edgesh.EdgeShell</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
