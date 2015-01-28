@@ -4,6 +4,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.github.sriki77.edgesh.command.Command;
+import org.github.sriki77.edgesh.command.CommandException;
 import org.github.sriki77.edgesh.command.ShellCommand;
 import org.github.sriki77.edgesh.data.EdgeEntity;
 import org.github.sriki77.edgesh.data.ShellContext;
@@ -45,6 +46,9 @@ public abstract class AbstractCommand implements Command {
             String part = parts[i];
             final String prefix = prefix(part);
             final String suffix = suffix(part);
+            if (i != 0 && prefix == null) {
+                throw new CommandException("Entity prefix is missing.");
+            }
             final Pair<EdgeEntity, String> edgeEntityValuePair
                     = ImmutablePair.of(prefix == null ? ORG : toEntity(prefix), suffix);
             entityValuePairs.add(edgeEntityValuePair);
@@ -75,8 +79,9 @@ public abstract class AbstractCommand implements Command {
     }
 
     protected RequestSpecification request(ShellCommand command, ShellContext context) {
-        return command.paramAtRoot()?context.contextFromRoot():context.contextRequest();
+        return command.paramAtRoot() ? context.contextFromRoot() : context.contextRequest();
     }
+
     @Override
     public EdgeEntity applicableTo() {
         return EdgeEntity.ALL;

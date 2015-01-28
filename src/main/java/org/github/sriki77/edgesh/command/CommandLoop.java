@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import static org.github.sriki77.edgesh.EdgeUtil.printError;
+
 public class CommandLoop {
     public static final String PROMPT_STRING = "$ ";
     private final ShellContext context;
@@ -38,7 +40,11 @@ public class CommandLoop {
                     out.flush();
                     return;
                 default:
-                    registry.handle(command, context, out);
+                    try {
+                        registry.handle(command, context, out);
+                    } catch (CommandException ce) {
+                        printError(ce.getMessage(), out);
+                    }
             }
             ShellCommand.clear();
             out.flush();

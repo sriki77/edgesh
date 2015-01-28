@@ -9,6 +9,8 @@ public class CommandLoopTest extends CommandTestBase {
         pwdContains("ROOT");
         execCommand("cd sriki77");
         pwdContains("ORG:sriki77");
+        execCommand("cd / ");
+        pwdContains("ROOT");
     }
 
 }

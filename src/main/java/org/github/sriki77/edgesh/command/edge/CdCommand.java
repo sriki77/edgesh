@@ -21,12 +21,22 @@ public class CdCommand extends AbstractCommand {
         if (command.dotParam() || command.dotdotParam()) {
             return false;
         }
-        final LinkedList<Pair<EdgeEntity, String>> pairs = entityValues(command);
-        final Response response = request(command, context).get(buildUrl(pairs));
-        if (!handleResponse(buildErrMsg("failed to change to ",pairs), out, response)) {
+        final String param = command.param();
+
+        //cd / case
+        if (param.equals("/")) {
+            context.reset();
             return true;
         }
-        if(command.param().startsWith("/")){
+
+        final LinkedList<Pair<EdgeEntity, String>> pairs = entityValues(command);
+        final Response response = request(command, context).get(buildUrl(pairs));
+        if (!handleResponse(buildErrMsg("failed to change to ", pairs), out, response)) {
+            return true;
+        }
+
+        //Absolute Path
+        if (param.startsWith("/")) {
             context.reset();
         }
         for (Pair<EdgeEntity, String> p : pairs) {

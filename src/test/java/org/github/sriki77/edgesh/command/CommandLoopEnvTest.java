@@ -18,6 +18,13 @@ public class CommandLoopEnvTest extends CommandTestBase {
     }
 
     @Test
+    public void shouldCDAGivenEnv() throws Exception {
+        execCommand("cd sriki77");
+        execCommand("ls ENV");
+        assertChange("test");
+    }
+
+    @Test
     public void shouldCatAGivenTargetServer() throws Exception {
         execCommand("cd sriki77/env:test/");
         assertThat(execCommand("ls .").contains("TS"), is(true));
@@ -32,6 +39,7 @@ public class CommandLoopEnvTest extends CommandTestBase {
         execCommand("cd sriki77/env:test/");
         assertThat(execCommand("ls .").contains("TS"), is(true));
         assertThat(execCommand("ls TS").contains("dead_lb"), is(true));
+        assertThat(execCommand("CAT TS").contains("dead_lb"), is(true));
         assertThat(execCommand("cat /sriki77/env:test/ts:dead_lb").contains("isEnabled"), is(true));
     }
 

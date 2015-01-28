@@ -9,7 +9,8 @@ public class CommandLoopOrgTest extends CommandTestBase {
     @Test
     public void shouldCatAGivenOrg() throws Exception {
         pwdContains("ROOT");
-        assertThat(execCommand("cat .").trim().length(), is(0));
+        final String result = execCommand("cat .");
+        assertThat(result.trim().length(), is(0));
         final String changedOrg = execCommand("cd sriki77");
         pwdContains("ORG:sriki77");
         assertThat(changedOrg.contains(execCommand("cat .").trim()), is(true));

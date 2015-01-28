@@ -50,6 +50,16 @@ public abstract class CommandTestBase {
         assertContains(value);
     }
 
+    protected void pwdEndsWith(String value) throws IOException {
+        commandIn.println("pwd");
+        assertEndsWith(value);
+    }
+
+    private void assertEndsWith(String value) throws IOException {
+        final String output = readOutput();
+        assertThat("Actual: " + output, output.endsWith(value), is(true));
+    }
+
     private void assertContains(String value) throws IOException {
         final String output = readOutput();
         assertThat("Actual: " + output, output.contains(value), is(true));
@@ -60,10 +70,10 @@ public abstract class CommandTestBase {
         String line;
         do {
             line = nextLine();
-            joiner.add(line);
+            joiner.add(line.trim());
         } while (!line.endsWith(PROMPT));
 
-        return joiner.toString().replace(PROMPT, "");
+        return joiner.toString().replace(PROMPT.trim(), "").trim();
     }
 
     protected String nextLine() throws IOException {
