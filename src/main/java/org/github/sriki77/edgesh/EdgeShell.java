@@ -14,7 +14,7 @@ import org.github.sriki77.edgesh.data.ShellContext;
 
 public class EdgeShell {
 
-    public static final String OPT_HELP = "help";
+    public static final String OPT_HELP = "man";
     public static final String OPT_URL = "url";
     public static final String OPT_USER = "u";
     public static final String OPT_PASSWORD = "p";

@@ -55,7 +55,17 @@ public class ContextNode {
         }
 
         for (ContextNode child : children) {
-            return child.nodeOfType(entity);
+            if(child.entity==entity){
+                return child;
+            }
+        }
+
+        for (ContextNode child : children) {
+            try {
+                return child.nodeOfType(entity);
+            } catch (Exception e) {
+                continue;
+            }
         }
 
         throw new IllegalArgumentException(String.format("Node with entity type %s not found.", entity));

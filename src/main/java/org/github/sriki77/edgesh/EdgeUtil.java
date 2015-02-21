@@ -36,6 +36,10 @@ public final class EdgeUtil {
         out.println(errorMsg(msg));
     }
 
+    public static void printError(Throwable throwable, PrintWriter out) {
+        out.println(errorMsg(throwable.toString()));
+    }
+
     public static void printMsg(String msg, PrintWriter out) {
         out.println(msg);
     }

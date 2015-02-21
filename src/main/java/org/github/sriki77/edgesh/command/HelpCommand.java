@@ -22,7 +22,7 @@ public class HelpCommand implements Command {
             }
         }
         printMsg("---------------", out);
-        return false;
+        return true;
     }
 
     @Override

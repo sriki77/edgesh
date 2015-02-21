@@ -15,7 +15,8 @@ public enum ShellCommand {
     QUIT("quit the shell.", "q", "quit", "exit"),
     PWD("print the current working directory(entity).", "pwd"),
     SET(1, "set the value of a given directory(entity). *NOT IMPLEMENTED YET*", "set"),
-    HELP("prints this message.", "help", "h", "?"),
+    HELP("prints the help message.", "help", "h", "?"),
+    MAN(1, "provides detailed documentation of commands.", "man"),
     INVALID("");
 
     public static final String PARAM_PREFIX_SEPARATOR = ":";
@@ -108,10 +109,24 @@ public enum ShellCommand {
             if (shellCommand.matches(cmd)) {
                 if (shellCommand.minParamCount > parts.length - 1) {
                     EdgeUtil.printError(String.format("'%s' should have %s argument(s)", cmd, shellCommand.maxParamCount), out);
+                    return INVALID;
                 }
                 if (param != null) {
                     shellCommand.setParam(param.trim());
                 }
+                return shellCommand;
+            }
+        }
+        return INVALID;
+    }
+
+
+    public static ShellCommand toCommand(String input) {
+        if (StringUtils.isBlank(input)) {
+            return INVALID;
+        }
+        for (ShellCommand shellCommand : values()) {
+            if (shellCommand.matches(input)) {
                 return shellCommand;
             }
         }
@@ -141,7 +156,9 @@ public enum ShellCommand {
 
     public static void clear() {
         for (ShellCommand command : values()) {
-            command.param=null;
+            command.param = null;
         }
     }
+
+
 }

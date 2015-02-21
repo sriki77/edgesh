@@ -1,0 +1,5 @@
+NAME
+    ls -- list contents of the current node
+
+DESCRIPTION
+    The command list the entities under the current node.

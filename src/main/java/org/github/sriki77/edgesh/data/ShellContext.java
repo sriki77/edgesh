@@ -3,7 +3,6 @@ package org.github.sriki77.edgesh.data;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.SSLConfig;
 import com.jayway.restassured.specification.RequestSpecification;
-import org.github.sriki77.edgesh.command.ShellCommand;
 
 import java.util.HashMap;
 
@@ -11,6 +10,7 @@ import static com.jayway.restassured.RestAssured.config;
 import static com.jayway.restassured.RestAssured.with;
 import static org.github.sriki77.edgesh.EdgeUtil.logVerbose;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ORG;
+import static org.github.sriki77.edgesh.data.EdgeEntity.ROOT;
 
 public class ShellContext {
 
@@ -48,8 +48,7 @@ public class ShellContext {
     }
 
     private void buildContextTree() {
-        ContextNode node = root.addChild(new ContextNode(ORG));
-        buildContextTree(node, ORG);
+        buildContextTree(root, ROOT);
     }
 
     private void buildContextTree(ContextNode node, EdgeEntity entity) {
