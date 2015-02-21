@@ -3,3 +3,23 @@ NAME
 
 DESCRIPTION
     The command list the entities under the current node.
+
+    The command takes one parameter. The parameter must be the name of an entity.
+
+    Example:
+
+    1. Lists all entities under an org.
+
+        cd <orgname>
+        ls
+        Entities: ENV,APIS,PRODS,APPS,COMPS,DEVS,KVMS,AUTHCODES,TOKENS,OAUTH1ACCESSTOKENS,OAUTH1REQUESTTOKENS,OAUTH1VERIFIERS,REPORTS,ROLES,VAULTS
+
+    2. List all envs under an org.
+
+         cd <orgname>
+         ls ENV
+         [ "test", "prod" ]
+
+    or
+         ls <orgname>/env
+         [ "test", "prod" ]

@@ -9,7 +9,6 @@ import java.util.HashMap;
 import static com.jayway.restassured.RestAssured.config;
 import static com.jayway.restassured.RestAssured.with;
 import static org.github.sriki77.edgesh.EdgeUtil.logVerbose;
-import static org.github.sriki77.edgesh.data.EdgeEntity.ORG;
 import static org.github.sriki77.edgesh.data.EdgeEntity.ROOT;
 
 public class ShellContext {
@@ -23,7 +22,7 @@ public class ShellContext {
     private ContextNode current = root;
 
     public ShellContext(String mgmtUrl, String userName, String password) {
-        this.mgmtUrl = mgmtUrl;
+        this.mgmtUrl = mgmtUrl.endsWith("/")?mgmtUrl:mgmtUrl+"/";
         this.userName = userName;
         this.password = password;
         buildContextTree();
