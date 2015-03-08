@@ -24,6 +24,7 @@ java -jar edgesh-1.0.jar
  -p <password>   Edge Password
  -u <username>   Edge Username
  -url <url>      Apigee Edge Mgmt URL
+ -v              verbose logging
 ```
 The command line parameters are self explanatory; in essence they capture the information required to work with REST API of Apigee Edge management server.
 
