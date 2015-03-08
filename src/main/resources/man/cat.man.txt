@@ -1,0 +1,29 @@
+NAME
+    cat -- print contents of given entity type or entity.
+
+DESCRIPTION
+    The command prints the content of the given entity type or entity
+
+    The command takes one parameter. The parameter must be the of format
+    entity-type:entity-name or entity-type
+
+
+    Example:
+
+    1. Print details fo environment 'test' under org 'dev'
+
+        cd org:dev
+        cat test
+
+        or
+
+        cat org:dev/env:test
+
+    2. Print details of entity-type environment
+
+        cd org:dev
+        cat ENV
+
+        Printing details of an entity is equivalent to 'ls' command on the entity-type.
+
+

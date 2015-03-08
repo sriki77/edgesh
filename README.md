@@ -8,6 +8,27 @@ Edge management server is morphed into an <u>UNIX like directory structure</u>. 
 
 For example, `ls` command on an `org` lists its entities like `environments`. You can `cd` to an environment and see its entities.
 
+Concepts
+---------
+
++ **Entities --- Directory Mapping**<br/>
+	Every Edge entity can be considered as a directory. Since Edge entities are 	hierarchal in nature - they map to a hierarchal directory structure. The root directory 	of this hierarchy is `org` entity.
+	
++ **Entity names**<br/>
+	Entity name is of the format `entity-type:entity-name` 	
+	If the entity type is omitted, its assumed to be `org` .<br/>
+	For example, the following command `cd` to a `org` named `dev`<br/>
+	
+	```				
+		cd dev
+		cd org:dev
+	```
+	The above two commands are equivalent. To switch to environment `test` following 	is the command.	<br/>
+	
+	```
+		cd env:test
+	```
+	
 Usage
 --------
 
@@ -41,7 +62,8 @@ Valid Commands:
 [q, quit, exit] - quit the shell.
 [pwd]           - print the current working directory(entity).
 [set]           - set the value of a given directory(entity). *NOT IMPLEMENTED YET*
-[help, h, ?]    - prints this message.
+[help, h, ?]    - prints the help message.
+[man]           - provides detailed documentation of commands.
 ---------------
 ```
 

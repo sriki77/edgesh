@@ -1,0 +1,27 @@
+NAME
+    cd -- change the current directory(entity) to given parameter.
+
+DESCRIPTION
+    The command changes the current entity to the given value.
+
+    The command takes one parameter. The parameter must be the of format entity-type:entity-name.
+
+    Example:
+
+    1. Change to environment named 'test' under the org 'dev'
+
+        cd org:dev
+        cd env:test
+
+        or
+
+        cd dev
+        cd env:test
+
+        or
+
+        cd dev/env:test
+
+        or
+
+        cd org:dev/env:test
