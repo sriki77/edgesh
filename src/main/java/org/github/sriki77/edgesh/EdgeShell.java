@@ -17,6 +17,7 @@ public class EdgeShell {
     public static final String OPT_HELP = "man";
     public static final String OPT_URL = "url";
     public static final String OPT_USER = "u";
+    public static final String OPT_VERBOSE = "v";
     public static final String OPT_PASSWORD = "p";
     public static final String DEFAULT_EDGE_URI = "https://api.enterprise.apigee.com:443/v1/";
 
@@ -58,13 +59,21 @@ public class EdgeShell {
                 .create(OPT_PASSWORD);
         passOption.setRequired(true);
 
+        final Option verbose = OptionBuilder.withDescription("verbose logging")
+                .create(OPT_VERBOSE);
+        passOption.setRequired(true);
+
         options.addOption(urlOption);
         options.addOption(userOption);
         options.addOption(passOption);
+        options.addOption(verbose);
         return options;
     }
 
     private static ShellContext processOptions(CommandLine cli) throws Exception {
+        if (cli.hasOption(OPT_VERBOSE)) {
+            System.setProperty(EdgeUtil.VERBOSE_LOGGING, "true");
+        }
         return new ShellContext(
                 cli.getOptionValue(OPT_URL, DEFAULT_EDGE_URI),
                 cli.getOptionValue(OPT_USER),
